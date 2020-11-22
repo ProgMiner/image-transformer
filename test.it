@@ -1,0 +1,23 @@
+#!./image-transformer -p./modules/
+
+# test script
+
+print_ansi("\"\"");
+echo();
+
+rotate.rotate();
+print_ansi();
+echo();
+
+rotate.rotate("-90");
+print_ansi();
+echo();
+
+rotate.rotate(45);
+print_ansi();
+echo();
+
+blur.do_(dilate);
+print_ansi();
+
+die();
