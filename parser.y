@@ -28,7 +28,7 @@ void yyerror(struct ast_script ** result, char ** error, const char * str);
 
 %type<script> script
 %type<transformation> transformation
-%type<transformation_args> transformation_args
+%type<transformation_args> transformation_args transformation_args_req
 %type<literal> literal
 %type<token> T_IDENTIFIER T_INTEGER T_FLOATING T_STRING
 
@@ -55,9 +55,13 @@ transformation
     ;
 
 transformation_args
-    : /* empty */                       { $$ = NULL; }
-    | literal                           { $$ = ast_transformation_args_new($1, NULL); }
-    | transformation_args ',' literal   { $$ = ast_transformation_args_new($3, $1); }
+    : /* empty */               { $$ = NULL; }
+    | transformation_args_req   { $$ = $1; }
+    ;
+
+transformation_args_req
+    : literal                               { $$ = ast_transformation_args_new($1, NULL); }
+    | transformation_args_req ',' literal   { $$ = ast_transformation_args_new($3, $1); }
     ;
 
 literal
