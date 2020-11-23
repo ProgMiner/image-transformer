@@ -3,7 +3,7 @@
 #include "../image.h"
 #include "../value.h"
 
-typedef struct pixel (* blur_t)(uint32_t x, uint32_t y, const struct image image);
+typedef struct pixel (* blur_function)(uint32_t x, uint32_t y, const struct image image);
 
 struct image expand_image(struct image image) {
     static const struct pixel black_pixel = { 0, 0, 0 };
@@ -34,7 +34,7 @@ struct image expand_image(struct image image) {
     return new_image;
 }
 
-void do_blur(struct image image, blur_t map) {
+void do_blur(struct image image, blur_function map) {
     struct image expanded_image = expand_image(image);
     uint32_t x, y;
 
@@ -121,7 +121,7 @@ struct pixel erode(uint32_t x, uint32_t y, const struct image image) {
 }
 
 const char * do_(struct image * image, uint32_t argc, struct value * args) {
-    blur_t map_function;
+    blur_function map_function;
 
     if (argc < 1 || !value_is_identifier(args[0])) {
         return "blur type (blur, dilate or erode) is required as first argument";

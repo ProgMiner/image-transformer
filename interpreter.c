@@ -9,7 +9,7 @@
 #include "value.h"
 #include "util.h"
 
-typedef const char * (* transformation_function_t)(struct image * image, uint32_t argc, const struct value * argv);
+typedef const char * (* transformation_function)(struct image * image, uint32_t argc, const struct value * argv);
 
 struct interpreter_ids {
     const char * module;
@@ -249,7 +249,7 @@ const char * interpreter_run(const struct interpreter interpreter, struct image 
     static char * transformation_name = NULL;
     const char * transformation_error;
 
-    transformation_function_t transformation_function;
+    transformation_function transformation_function;
     struct ast_transformation transformation;
     const struct ast_script * next;
     struct value * args;
