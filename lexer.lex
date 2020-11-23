@@ -23,10 +23,6 @@ void update_yylloc() {
             yylloc.last_column = 1;
             break;
 
-        case '\t':
-            yylloc.last_column += 8;
-            break;
-
         default:
             ++yylloc.last_column;
         }
